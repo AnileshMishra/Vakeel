@@ -1,0 +1,33 @@
+package com.vakeel.master.service;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class BusinessClassTest {
+
+	@Test
+	public void testMethod_Basic() {
+		DistrictMasterService service = new DistrictMasterService();
+		int sumResult = service.testMethod(new int[] {1,4,3,6});
+		int actualResult = 14;
+		assertEquals(actualResult, sumResult);
+	}
+	
+	@Test
+	public void testMethod_Empty() {
+		DistrictMasterService service = new DistrictMasterService();
+		int sumResult = service.testMethod(new int[] {});
+		int actualResult = 0;
+		assertEquals(actualResult, sumResult);
+	}
+	
+	@Test
+	public void testMethod_OneValue() {
+		DistrictMasterService service = new DistrictMasterService();
+		int sumResult = service.testMethod(new int[] {2});
+		int actualResult = 1;
+		assertEquals(actualResult, sumResult);
+	}
+
+}

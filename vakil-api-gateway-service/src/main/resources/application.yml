@@ -1,0 +1,42 @@
+#spring:
+#  cloud:
+#    gateway:
+#      routes[0]:
+#        -id: VAKIL-USER-SERVICE
+#        uri: lb://VAKIL-USER-SERVICE
+#        predicates:
+#          - Path=/user/**
+#      routes[1]:
+#        - id: VAKIL-MASTER-SERVICE
+#          uri: lb://VAKIL-MASTER-SERVICE
+#          predicates:
+#            - Path=/master/**
+#         
+
+
+
+
+server:
+  port: 9191
+
+
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: VAKIL-MASTER-SERVICE
+        uri: lb://VAKIL-MASTER-SERVICE
+        predicates:
+        - Path=/master/**
+        filters:
+        - RewritePath=/master/(?<path>.*), /$\{path}
+      - id: VAKIL-USER-SERVICE
+        uri: lb://VAKIL-USER-SERVICE
+        predicates:
+        - Path=/user/**
+        filters:
+        - RewritePath=/user/(?<path>.*), /$\{path}

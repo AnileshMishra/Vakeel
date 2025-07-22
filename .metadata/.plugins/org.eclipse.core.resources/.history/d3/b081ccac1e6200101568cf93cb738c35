@@ -1,0 +1,60 @@
+package com.vakeel.master.service;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import com.vakeel.master.dto.RequestDto;
+import com.vakeel.master.dto.ResponseDto;
+import com.vakeel.master.modal.DistrictMaster;
+import com.vakeel.master.modal.StateMaster;
+
+
+class BusinessClassTest {
+
+	@Test
+	public void testMethod_Basic() {
+		DistrictMasterService service = new DistrictMasterService();
+		int sumResult = service.testMethod(new int[] {1,4,3,6});
+		int actualResult = 14;
+		assertEquals(actualResult, sumResult);
+	}
+	
+	@Test
+	public void testMethod_Empty() {
+		DistrictMasterService service = new DistrictMasterService();
+		int sumResult = service.testMethod(new int[] {});
+		int actualResult = 0;
+		assertEquals(actualResult, sumResult);
+	}
+	
+	@Test
+	public void testMethod_OneValue() {
+		DistrictMasterService service = new DistrictMasterService();
+		int sumResult = service.testMethod(new int[] {2});
+		int actualResult = 2;
+		assertEquals(actualResult, sumResult);
+	}
+	
+	@Test
+	public void getDistrictlist_test() {
+		DistrictMasterService service = new DistrictMasterService();
+		RequestDto requestDto = new RequestDto();
+		requestDto.setStateCode("UP");
+		ResponseDto dto = service.getStateMasterById(requestDto);
+		
+		StateMaster stateMaster = new StateMaster();
+		stateMaster.setStateCode("UP");
+		stateMaster.setStateName("Uttar Pradesh");
+		ResponseDto expectedDto = new ResponseDto();
+		expectedDto.setStateMaster(stateMaster);
+		
+		assertEquals(expectedDto, dto);
+		
+		
+	}
+
+}

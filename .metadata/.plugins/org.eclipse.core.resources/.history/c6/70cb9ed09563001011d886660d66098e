@@ -1,0 +1,65 @@
+package com.vakeel.master.controller;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.vakeel.master.dto.RequestDto;
+import com.vakeel.master.dto.ResponseDto;
+import com.vakeel.master.modal.StateMaster;
+import com.vakeel.master.serviceImpl.StateMasterServiceImpl;
+
+import jakarta.validation.Valid;
+
+
+@RestController
+@RequestMapping(value = "state")
+public class StateMasterController {
+
+	@Autowired
+	private StateMasterServiceImpl stateMasterService;
+
+	@RequestMapping(value = "/getStateMasterList", method = RequestMethod.GET)
+	public ResponseEntity<ResponseDto> getStateMasterList() {
+		ResponseDto responseDto = stateMasterService.getStatelist();
+		if (responseDto.getStatusCode() == 200) {
+			return ResponseEntity.ok(responseDto);
+		} else {
+			return ResponseEntity.ofNullable(responseDto);
+		}
+	}
+
+	@RequestMapping(value = "createStateMaster", method = RequestMethod.POST)
+	public ResponseEntity<ResponseDto> createStateMaster(@Valid @RequestBody StateMaster stateMaster,
+			BindingResult bindingResult) {
+//		if (bindingResult.hasErrors()) {
+//			ResponseDto dto = new ResponseDto();
+//			dto.setResponseMsg("Validation failed!!");
+//            return ResponseEntity.ofNullable(dto);
+//        }
+		
+		ResponseDto responseDto = stateMasterService.createStateInStateMaster(stateMaster);
+		if (responseDto.getStatusCode() == 200) {
+			return ResponseEntity.ok(responseDto);
+		} else {
+			return ResponseEntity.ofNullable(responseDto);
+		}
+
+	}
+
+	@RequestMapping(value = "deleteState", method = RequestMethod.POST)
+	public ResponseEntity<ResponseDto> deleteState(@RequestBody RequestDto requestDto) {
+		ResponseDto responseDto = stateMasterService.deleteStateInStateMaster(requestDto);
+
+		if (responseDto.getStatusCode() == 200) {
+			return ResponseEntity.ok(responseDto);
+		} else {
+			return ResponseEntity.ofNullable(responseDto);
+		}
+	}
+}

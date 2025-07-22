@@ -1,0 +1,47 @@
+package com.vakeel.master.controller;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import com.vakeel.master.dto.ResponseDto;
+import com.vakeel.master.serviceImpl.StateMasterServiceImpl;
+
+@WebMvcTest(StateMasterController.class)
+class StateMasterControllerTest {
+	
+	@Autowired
+	private MockMvc mockMvc;
+	
+	@MockBean
+	private StateMasterServiceImpl masterServiceImpl;
+
+	@Test
+	public void getStateMasterListTest() throws Exception {
+		
+		ResponseDto responseDto = new ResponseDto();
+		responseDto.setStatusCode(401);
+		responseDto.setStatusMsg("failed.");
+		responseDto.setResponseMsg("Record not found.");
+		
+		when(masterServiceImpl.getStatelist()).thenReturn(responseDto);
+		
+		RequestBuilder request = MockMvcRequestBuilders.get("/state/getStateMasterList")
+				.accept(MediaType.APPLICATION_JSON);
+		
+		mockMvc.perform(request)
+		.andExpect(status().isOk())
+		.andExpect(content().json(null))
+		.andReturn();
+	}
+
+}

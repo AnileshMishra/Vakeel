@@ -1,0 +1,95 @@
+package com.vakeel.master.service;
+
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.vakeel.master.dto.RequestDto;
+import com.vakeel.master.dto.ResponseDto;
+import com.vakeel.master.modal.StateMaster;
+import com.vakeel.master.repository.JpaStateMasterRepository;
+import com.vakeel.master.serviceImpl.StateMasterServiceInterface;
+
+@Service
+public class StateMasterService implements StateMasterServiceInterface {
+
+	@Autowired
+	private JpaStateMasterRepository jpaStateMasterRepository;
+
+	@Override
+	public ResponseDto getStatelist() {
+		ResponseDto responseDto = new ResponseDto();
+
+		List<StateMaster> stateList = jpaStateMasterRepository.findAllByIsDeleted(false);
+
+		if (stateList != null && !stateList.isEmpty()) {
+			responseDto.setStatusCode(200);
+			responseDto.setStatusMsg("Success.");
+			responseDto.setResponseMsg("Record found successfully!!!.");
+			responseDto.setStateMasterList(stateList);
+		} else {
+			responseDto.setStatusCode(401);
+			responseDto.setStatusMsg("failed.");
+			responseDto.setResponseMsg("Record not found.");
+		}
+		return responseDto;
+	}
+
+	@Override
+	public ResponseDto createStateInStateMaster(StateMaster stateMaster) {
+		ResponseDto responseDto = new ResponseDto();
+		
+		stateMaster.setCreatedDate(new Timestamp(new Date().getTime()));
+		StateMaster savedStateMaster = jpaStateMasterRepository.save(stateMaster);
+
+		if (savedStateMaster.getId() != null) {
+			responseDto.setStatusCode(200);
+			responseDto.setStatusMsg("Success.");
+			responseDto.setResponseMsg("Record created successfully!!!.");
+			responseDto.setStateMaster(savedStateMaster);
+		} else {
+			responseDto.setStatusCode(401);
+			responseDto.setStatusMsg("failed.");
+			responseDto.setResponseMsg("Record failed to create.");
+		}
+		return responseDto;
+	}
+
+	@Override
+	public ResponseDto deleteStateInStateMaster(RequestDto requestDto) {
+		ResponseDto responseDto = new ResponseDto();
+
+		Optional<StateMaster> stateMaster = jpaStateMasterRepository.findById(requestDto.getStateId());
+
+		StateMaster newStateMaster = null;
+		if(stateMaster.isPresent()) {
+			newStateMaster = new StateMaster();
+			newStateMaster = stateMaster.get();
+			newStateMaster.setDeleted(true);
+			newStateMaster.setDeletedDate(new Timestamp(new Date().getTime()));
+			
+			newStateMaster = jpaStateMasterRepository.save(newStateMaster);
+		} else {
+			responseDto.setStatusCode(401);
+			responseDto.setStatusMsg("failed.");
+			responseDto.setResponseMsg("No Record exist.");
+			return responseDto;
+		}
+		if (newStateMaster.isDeleted()) {
+			responseDto.setStatusCode(200);
+			responseDto.setStatusMsg("Success.");
+			responseDto.setResponseMsg("Record deleted successfully!!!.");
+			responseDto.setStateMaster(newStateMaster);
+		} else {
+			responseDto.setStatusCode(401);
+			responseDto.setStatusMsg("failed.");
+			responseDto.setResponseMsg("Record failed to delete.");
+		}
+		return responseDto;
+	}
+
+}

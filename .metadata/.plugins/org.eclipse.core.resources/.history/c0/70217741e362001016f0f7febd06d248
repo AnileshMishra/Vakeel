@@ -1,0 +1,77 @@
+package com.vakeel.master.service;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.vakeel.master.dto.RequestDto;
+import com.vakeel.master.dto.ResponseDto;
+import com.vakeel.master.modal.DistrictMaster;
+import com.vakeel.master.modal.StateMaster;
+import com.vakeel.master.repository.JpaStateMasterRepository;
+
+@ExtendWith(MockitoExtension.class)
+class BusinessClassTest {
+
+	@InjectMocks
+	DistrictMasterService service;
+
+	@Mock
+	JpaStateMasterRepository stateMasterRepository;
+
+	@Test
+	public void testMethod_Basic() {
+
+		int sumResult = service.testMethod(new int[] { 1, 4, 3, 6 });
+		int actualResult = 14;
+		assertEquals(actualResult, sumResult);
+	}
+
+	@Test
+	public void testMethod_Empty() {
+		int sumResult = service.testMethod(new int[] {});
+		int actualResult = 0;
+		assertEquals(actualResult, sumResult);
+	}
+
+	@Test
+	public void testMethod_OneValue() {
+		int sumResult = service.testMethod(new int[] { 2 });
+		int actualResult = 2;
+		assertEquals(actualResult, sumResult);
+	}
+
+	@Test
+	public void getDistrictlist_test() throws ParseException {
+		RequestDto requestDto = new RequestDto();
+		requestDto.setStateCode("UP");
+		SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy mm:hh");
+		Timestamp createdTime = new Timestamp(((Date) ft.parse("2024-04-18 12:03:48.847")).getTime());
+		when(stateMasterRepository.findByStateCodeAndIsDeleted("UP", false))
+				.thenReturn(new StateMaster(1l, "Uttar Pradesh", "UP", createdTime, false, createdTime));
+		ResponseDto dto = service.getStateMasterById(requestDto);
+
+		StateMaster stateMaster = new StateMaster(1l, "Uttar Pradesh", "UP", createdTime, false, createdTime);
+		stateMaster.setStateCode("UP");
+		stateMaster.setStateName("Uttar Pradesh");
+		ResponseDto expectedDto = new ResponseDto();
+		expectedDto.setStateMaster(stateMaster);
+
+		assertEquals(expectedDto, dto);
+
+	}
+
+}

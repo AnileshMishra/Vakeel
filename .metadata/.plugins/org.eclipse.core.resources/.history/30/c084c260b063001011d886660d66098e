@@ -1,0 +1,16 @@
+package com.vakeel.master.repository;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+
+@dataJpaTest
+public class JpaStateMasterRepositoryTest {
+
+	@Test
+	void test() {
+		fail("Not yet implemented");
+	}
+
+}

@@ -1,0 +1,21 @@
+package com.vakeel.master.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.vakeel.master.modal.StateMaster;
+
+@RestController
+public class TestController {
+
+	@RequestMapping(value = "/hello", method = RequestMethod.GET)
+	public String hello() {
+		return "Hello World!";
+	}
+	
+	@RequestMapping(value = "/getOBject", method = RequestMethod.GET)
+	public StateMaster getObject() {
+//		return new StateMaster(1l, "Delhi", "DL", null, false, null);
+	}
+}

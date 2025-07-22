@@ -1,0 +1,21 @@
+package com.vakeel.master.controller;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.apache.http.client.methods.RequestBuilder;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+@WebMvcTest(StateMasterController.class)
+class HelloWorldControllerTest {
+
+	@Test
+	public void helloWorldBasicTest() {
+
+		RequestBuilder request = MockMvcRequestBuilders.get("state/hello").accept(MediaType.APPLICATION_JSON);
+	}
+
+}
