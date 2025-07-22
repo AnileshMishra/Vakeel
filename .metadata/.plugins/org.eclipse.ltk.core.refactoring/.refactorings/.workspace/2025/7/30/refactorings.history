@@ -1,4 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete resource &apos;unit-testing&apos;" deleteContents="true" description="Delete resource &apos;unit-testing&apos;" element1="/unit-testing" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1753164547831"/>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;unit-testing&apos;" deleteContents="true" description="Delete resource &apos;unit-testing&apos;" element1="/unit-testing" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1753164547831"/>&#x0A;<refactoring comment="Delete 6 resources" deleteContents="false" description="Delete 6 resources" element1="/common-lib" element2="/vakil-api-gateway-service" element3="/vakil-auth-service" element4="/vakil-discovery-server" element5="/vakil-master-service" element6="/vakil-user-service" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="6" stamp="1753170337983"/>
 </session>

@@ -5,3 +5,8 @@
 **/.idea/
 **/.vscode/
 *.iml
+/.metadata/
+/.markers
+/.index
+/.dat
+/.
